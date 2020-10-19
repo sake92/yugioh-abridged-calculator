@@ -12,9 +12,45 @@
 <body>
   <div class="container" id="app">
 
-    <button v-on:click="playPhase('mp')" class="primary">Main Phase 1</button>
-    <button v-on:click="playPhase('bp')" class="secondary">Battle Phase</button>
-    <button v-on:click="playPhase('mp')" class="tertiary">Main Phase 2</button>
+    <div class="row">
+      <div class="card">
+
+        <div class="section">
+          <h1><small style="display: inline;">LP:</small> {{p1.lifePoints}}</h1>
+        </div>
+
+
+
+        <div class="section">
+          <div class="row">
+            <button class="col-sm tertiary" @click="addLP(true)" :disabled="p1.tmpPoints <= 0">+</button>
+            <button class="col-sm secondary" @click="addLP(false)" :disabled="p1.tmpPoints <= 0">-</button>
+          </div>
+          <div class="row">
+            <input type="number" v-model="p1.tmpPoints" readonly style="width: 100%; text-align: right;" />
+          </div>
+          <div class="row">
+            <button class="col-sm" @click="addTmp(1000)">1000</button>
+            <button class="col-sm" @click="addTmp(500)">500</button>
+            <button class="col-sm" @click="addTmp(100)">100</button>
+          </div>
+        </div>
+
+
+        <div class="section">
+          <div class="button-group">
+            <button v-on:click="playPhase('mp')" class="primary">Main Phase</button>
+            <button v-on:click="playPhase('bp')" class="secondary">Battle Phase</button>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+
+
 
   </div>
 

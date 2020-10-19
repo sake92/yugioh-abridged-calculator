@@ -11,8 +11,15 @@ const app = new Vue({
 			bp: {
 				audios: ['sangajski_aligator.mp3', 'zeleni_polubrat.mp3', 'plavi_guster.mp3',
 					'spali_ga_prohom.mp3', 'budalo_napad.mp3', 'husein_kapetan.mp3', 'sibirski_plavac.mp3',
-				'uzmi_spiceve.mp3']
+					'uzmi_spiceve.mp3', 'nauzvarenim.mp3']
+			},
+			minus: {
+				audios: ['e_jebemu.mp3', 'ogrebotine.mp3']
 			}
+		},
+		p1: {
+			lifePoints: 8000,
+			tmpPoints: 0
 		}
 	},
 	methods: {
@@ -20,7 +27,7 @@ const app = new Vue({
 			const phaseData = this.phaseAudios[name];
 			const idx = Math.floor(Math.random() * phaseData.audios.length);
 			const fileName = phaseData.audios[idx];
-			this.play(`audio/bs/${fileName}`);
+			this.play(`audio/bs/${name}/${fileName}`);
 		},
 		play(url) {
 			if (this.isPlaying) return;
@@ -28,6 +35,19 @@ const app = new Vue({
 			const audio = new Audio(url);
 			audio.play();
 			audio.addEventListener('ended', () => this.isPlaying = false);
+		},
+		addTmp(amount) {
+			this.p1.tmpPoints += amount;
+		},
+		addLP(add) {
+			if (this.p1.tmpPoints <= 0 || this.isPlaying) return;
+
+			if (add) this.p1.lifePoints += this.p1.tmpPoints;
+			else {
+				this.p1.lifePoints -= this.p1.tmpPoints;
+				this.playPhase('minus');
+			}
+			this.p1.tmpPoints = 0;
 		}
 	}
 });
