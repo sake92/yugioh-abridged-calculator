@@ -1,4 +1,26 @@
 
+const animateCSS = (element, animation, durationMillis, prefix = 'animate__') =>
+	// We create a Promise and return it
+	new Promise((resolve, reject) => {
+		const animationName = `${prefix}${animation}`;
+		const node = document.querySelector(element);
+
+		let repeat = Math.ceil(durationMillis / 1000);
+		node.classList.add(`${prefix}animated`, animationName);
+		node.classList.add(`animate__repeat-${repeat}`);
+		node.style.setProperty('--animate-duration', '1s');
+
+
+		// When the animation ends, we clean the classes and resolve the Promise
+		function handleAnimationEnd() {
+			node.classList.remove(`${prefix}animated`, animationName);
+			resolve('Animation ended');
+		}
+
+		node.addEventListener('animationend', handleAnimationEnd, { once: true });
+	});
+
+
 const app = new Vue({
 	el: '#app',
 	data: {
@@ -20,7 +42,8 @@ const app = new Vue({
 		p1: {
 			lifePoints: 8000,
 			tmpPoints: 0
-		}
+		},
+
 	},
 	methods: {
 		playPhase(name) {
@@ -44,9 +67,19 @@ const app = new Vue({
 
 			if (add) this.p1.lifePoints += this.p1.tmpPoints;
 			else {
-				this.p1.lifePoints -= this.p1.tmpPoints;
+				let remaining = this.p1.tmpPoints;
+				while (remaining > 0) {
+					remaining -= 1;
+					setTimeout(() => {
+						this.p1.lifePoints -= 1;
+					}, remaining);
+				}
+
+				//this.p1.lifePoints -= this.p1.tmpPoints;
 				this.playPhase('minus');
 			}
+
+			animateCSS('#LPs', 'shakeX', this.p1.tmpPoints);
 			this.p1.tmpPoints = 0;
 		}
 	}

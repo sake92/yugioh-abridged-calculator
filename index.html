@@ -5,8 +5,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Yu-Gi-Oh! Abridged Calculator</title>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 
 <body>
@@ -16,7 +18,9 @@
       <div class="card">
 
         <div class="section">
-          <h1><small style="display: inline;">LP:</small> {{p1.lifePoints}}</h1>
+          <h1 id="LPs"><small style="display: inline;">LP:</small>
+            <span >{{p1.lifePoints}}</span>
+          </h1>
         </div>
 
 
